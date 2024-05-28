@@ -310,13 +310,13 @@ set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, f
                      line_spacing=22, space_after=0, space_before=0)
 
 # Заполнение таблицы
-col_1 = in_data.input_comp
-col_2 = calc.col_2
-col_3 = calc.col_3
-col_4 = calc.col_4
-col_5 = calc.col_5
-col_6 = calc.col_6
-col_7 = calc.col_7
+col_1 = calc.table1_col1_title
+col_2 = calc.table1_col2_title
+col_3 = calc.table1_col3_title
+col_4 = calc.table1_col4_title
+col_5 = calc.table1_col5_title
+col_6 = calc.table1_col6_title
+col_7 = calc.table1_col7_title
 
 # Проверяем, что все колонки имеют одинаковое количество элементов
 columns = [col_1, col_2, col_3, col_4, col_5, col_6, col_7]
@@ -375,13 +375,13 @@ set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, f
                      line_spacing=22, space_after=0, space_before=0)
 
 # Заполнение таблицы
-col_1 = in_data.input_comp
-col_2 = calc.col_2
-col_3 = calc.col_3
-col_4 = calc.col_4
-col_5 = calc.col_5
-col_6 = calc.col_6
-col_7 = calc.col_7
+col_1 = calc.table1_col1_title
+col_2 = calc.table1_col2_title
+col_3 = calc.table1_col3_title
+col_4 = calc.table1_col4_title
+col_5 = calc.table1_col5_title
+col_6 = calc.table1_col6_title
+col_7 = calc.table1_col7_title
 
 # Проверяем, что все колонки имеют одинаковое количество элементов
 columns = [col_1, col_2, col_3, col_4, col_5, col_6, col_7]

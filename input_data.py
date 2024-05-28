@@ -2,8 +2,64 @@
 
 #Наименование компонентов
 #--Имя--Молекулярная масса--Масс концентрация--
-name_comp = ['СУГ', 'Нафта', 'CH3SH']
-print(type(name_comp))
+name_comp = [
+    'СУГ',
+    'Нафта',
+    'CH3SH',
+    'C2H5SH',
+    'C3H7SH',
+    'H2S',
+    'COS',
+    'CS2',
+    'H2O',
+    'NaOH',
+    'CH3SNa',
+    'C3H7SNa',
+    'C2H5SNa',
+    'Na2S',
+    'CH3SO2SCH3',
+    'C2H5SO2SC2H5',
+    'C3H7SO2SC3H7',
+    'CH3SSCH3',
+    'C2H5SSC2H5',
+    'C3H7SSC3H7',
+    'Na2SO4',
+    'N2',
+    'O2',
+    'CO2'
+]
+mm_comp =   [
+    None,
+    None,
+    48.108,
+    62.136,
+    76.162,
+    34.081,
+    60.075,
+    76.141,
+    18.015,
+    39.997,
+    70.090,
+    98.144,
+    84.117,
+    78.045,
+    126.198,
+    154.252,
+    182.306,
+    94.200,
+    122.254,
+    150.308,
+    142.041,
+    28.014,
+    31.998,
+    44.009
+]
+
+m_conc = []
+
+
+print(len(name_comp))
+print(len(mm_comp))
 
 name_comp1, mm_comp1, m_conc_comp1 = 'СУГ', 55, 55
 name_comp2, mm_comp2, m_conc_comp2 = 'Нафта', 55, 55
