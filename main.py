@@ -4,6 +4,7 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT, WD_ALIGN_PARAGRAPH
 from docx.enum.section import WD_SECTION, WD_ORIENT
+import pandas as pd
 
 import input_data as in_data
 import calc
@@ -302,135 +303,102 @@ new_section = doc.add_section(WD_SECTION.NEW_PAGE)
 #-----------------------------------------------------------------------------------------------------------------------
 # Добавляем второй параграф после разрыва раздела
 table9_1 = table_counter.increment()
-paragraph_after_break = doc.add_paragraph(f'Таблица {table9_1} – Расчетный материальный баланс процесса очистки СУГ')
-paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
-for run in paragraph_after_break.runs:
-    set_font(run, 'Times New Roman', 14)
-set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
-                     line_spacing=22, space_after=0, space_before=0)
 
-# Заполнение таблицы
-col_1 = calc.table1_col1_title
-col_2 = calc.table1_col2_title
-col_3 = calc.table1_col3_title
-col_4 = calc.table1_col4_title
-col_5 = calc.table1_col5_title
-col_6 = calc.table1_col6_title
-col_7 = calc.table1_col7_title
+def read_excel_data(filename, sheet_name):
+    try:
+        return pd.read_excel(filename, sheet_name=sheet_name)
+    except FileNotFoundError:
+        print(f"ОШИБКА: Файл {filename} не найден.")
+    except ValueError:
+        print(f"ОШИБКА: Лист {sheet_name} не найден в файле {filename}.")
+    except Exception as e:
+        print(f"ОШИБКА: Произошла ошибка при чтении файла {filename}: {e}")
 
-# Проверяем, что все колонки имеют одинаковое количество элементов
-columns = [col_1, col_2, col_3, col_4, col_5, col_6, col_7]
-len_status = all(len(col) == len(columns[0]) for col in columns)
-print(f"Все колонки Таблицы {11} – Расчетный материальный баланс процесса очистки СУГ, имеют одинаковое количество элементов:", len_status)
 
-# Добавляем таблицу с количеством строк, соответствующим размеру col_1
-table = doc.add_table(rows=len(col_1), cols=7)
-table.style = 'Table Grid'
+def generate_flow_tables(df, flow_names, flow_nums):
+    name_comp = df.iloc[:, 0]
+    table_name_comp = ['Номер потока по схеме', 'Наименование потока', 'Состав'] + name_comp.tolist()
 
-# Заполняем таблицу данными из col_i
-for row_idx in range(len(col_1)):
-    for col_idx, col_data in enumerate([col_1, col_2, col_3, col_4, col_5, col_6, col_7]):
-        cell = table.cell(row_idx, col_idx)
-        cell_paragraph = cell.paragraphs[0]
-        cell_paragraph.text = col_data[row_idx]
-        cell_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
-        for run in cell_paragraph.runs:
-            set_font(run, 'Times New Roman', 12)
-        set_paragraph_format(cell_paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
-                             line_spacing=18, space_after=0, space_before=0)
+    flow_tables = []
+    for i in range(len(flow_names)):
+        flow_rate = df.iloc[:, 2 + i * 2].tolist()
+        flow_frac = df.iloc[:, 3 + i * 2].tolist()
 
-# Объединяем ячейки по горизонтали
-row_cell_02 = table.cell(0, 1)
-row_cell_03 = table.cell(0, 2)
-row_cell_02.merge(row_cell_03)
+        table_flow_rate = [flow_nums[i], flow_names[i], 'кг/ч'] + [f'{item:.4f}' for item in flow_rate]
+        table_flow_frac = ['', '', '% масс.'] + [f'{item:.4f}' for item in flow_frac]
 
-row_cell_12 = table.cell(1, 1)
-row_cell_13 = table.cell(1, 2)
-row_cell_12.merge(row_cell_13)
-#-----------------------------
-row_cell_02 = table.cell(0, 3)
-row_cell_03 = table.cell(0, 4)
-row_cell_02.merge(row_cell_03)
+        flow_tables.append((table_flow_rate, table_flow_frac))
 
-row_cell_14 = table.cell(1, 3)
-row_cell_15 = table.cell(1, 4)
-row_cell_14.merge(row_cell_15)
-#-----------------------------
-row_cell_06 = table.cell(0, 5)
-row_cell_07 = table.cell(0, 6)
-row_cell_06.merge(row_cell_07)
+    return table_name_comp, flow_tables
 
-row_cell_16 = table.cell(1, 5)
-row_cell_17 = table.cell(1, 6)
-row_cell_16.merge(row_cell_17)
 
-# Добавляем разрыв страницы
-doc.add_page_break()
+# Чтение данных из Excel-файла
+df = read_excel_data('database.xlsx', 'Сводный мат баланс')
+fn = read_excel_data('database.xlsx', 'Название потоков')
 
-paragraph_after_break = doc.add_paragraph(f'Продолжение таблицы {table9_1} – Расчетный материальный баланс процесса очистки СУГ')
-paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
-for run in paragraph_after_break.runs:
-    set_font(run, 'Times New Roman', 14)
-set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
-                     line_spacing=22, space_after=0, space_before=0)
+if df is not None and fn is not None:
+    flow_names = fn.iloc[:, 1].tolist()
+    flow_nums = fn.iloc[:, 0].tolist()
 
-# Заполнение таблицы
-col_1 = calc.table1_col1_title
-col_2 = calc.table1_col2_title
-col_3 = calc.table1_col3_title
-col_4 = calc.table1_col4_title
-col_5 = calc.table1_col5_title
-col_6 = calc.table1_col6_title
-col_7 = calc.table1_col7_title
+    table_name_comp, flow_tables = generate_flow_tables(df, flow_names, flow_nums)
 
-# Проверяем, что все колонки имеют одинаковое количество элементов
-columns = [col_1, col_2, col_3, col_4, col_5, col_6, col_7]
-len_status = all(len(col) == len(columns[0]) for col in columns)
-print(f"Все колонки Таблицы {11} – Расчетный материальный баланс процесса очистки СУГ, имеют одинаковое количество элементов:", len_status)
+    paragraph_after_break = doc.add_paragraph(
+        f'Таблица {table9_1} – Расчетный материальный баланс процесса очистки СУГ')
+    paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in paragraph_after_break.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
+                         line_spacing=22, space_after=0, space_before=0)
+    columns = [table_name_comp]
+    for i in range(len(flow_tables)):
+        columns.append(flow_tables[i][0])  # Номер потока
+        columns.append(flow_tables[i][1])  # Доля потока
 
-# Добавляем таблицу с количеством строк, соответствующим размеру col_1
-table = doc.add_table(rows=len(col_1), cols=7)
-table.style = 'Table Grid'
+    # Проверяем, что все колонки имеют одинаковое количество элементов
+    len_status = all(len(col) == len(columns[0]) for col in columns)
+    print(f"Все колонки имеют одинаковое количество элементов:", len_status)
 
-# Заполняем таблицу данными из col_i
-for row_idx in range(len(col_1)):
-    for col_idx, col_data in enumerate([col_1, col_2, col_3, col_4, col_5, col_6, col_7]):
-        cell = table.cell(row_idx, col_idx)
-        cell_paragraph = cell.paragraphs[0]
-        cell_paragraph.text = col_data[row_idx]
-        cell_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
-        for run in cell_paragraph.runs:
-            set_font(run, 'Times New Roman', 12)
-        set_paragraph_format(cell_paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
-                             line_spacing=18, space_after=0, space_before=0)
+    # Разделение на страницы с table_name_comp и по 6 колонок на каждой
+    page_size = 6
+    for start in range(1, len(columns), page_size):
+        end = start + page_size
+        current_columns = [table_name_comp] + columns[start:end]
 
-# Объединяем ячейки по горизонтали
-row_cell_02 = table.cell(0, 1)
-row_cell_03 = table.cell(0, 2)
-row_cell_02.merge(row_cell_03)
+        if len(current_columns) < page_size + 1:
+            # Если текущая страница имеет меньше 7 колонок (включая table_name_comp), добавляем пустые колонки
+            for _ in range(page_size + 1 - len(current_columns)):
+                current_columns.append([''] * len(table_name_comp))
 
-row_cell_12 = table.cell(1, 1)
-row_cell_13 = table.cell(1, 2)
-row_cell_12.merge(row_cell_13)
-#-----------------------------
-row_cell_02 = table.cell(0, 3)
-row_cell_03 = table.cell(0, 4)
-row_cell_02.merge(row_cell_03)
+        # Добавляем таблицу с количеством строк, соответствующим размеру table_name_comp
+        table = doc.add_table(rows=len(table_name_comp), cols=len(current_columns))
+        table.style = 'Table Grid'
 
-row_cell_14 = table.cell(1, 3)
-row_cell_15 = table.cell(1, 4)
-row_cell_14.merge(row_cell_15)
-#-----------------------------
-row_cell_06 = table.cell(0, 5)
-row_cell_07 = table.cell(0, 6)
-row_cell_06.merge(row_cell_07)
+        # Заполняем таблицу данными из current_columns
+        for row_idx in range(len(table_name_comp)):
+            for col_idx, col_data in enumerate(current_columns):
+                cell = table.cell(row_idx, col_idx)
+                cell_paragraph = cell.paragraphs[0]
+                cell_paragraph.text = str(col_data[row_idx])
+                cell_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+                for run in cell_paragraph.runs:
+                    set_font(run, 'Times New Roman', 12)
+                set_paragraph_format(cell_paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
+                                     line_spacing=18, space_after=0, space_before=0)
 
-row_cell_16 = table.cell(1, 5)
-row_cell_17 = table.cell(1, 6)
-row_cell_16.merge(row_cell_17)
+        # Объединение ячеек
+        for i in range(1, len(current_columns) - 1, 2):
+            table.cell(0, i).merge(table.cell(0, i + 1))
+            table.cell(1, i).merge(table.cell(1, i + 1))
 
-# Добавляем разрыв страницы
-doc.add_page_break()
+        doc.add_page_break()
+
+        paragraph_after_break = doc.add_paragraph(
+            f'Продолжение таблицы {table9_1} – Расчетный материальный баланс процесса очистки СУГ')
+        paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+        for run in paragraph_after_break.runs:
+            set_font(run, 'Times New Roman', 14)
+        set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
+                             line_spacing=22, space_after=0, space_before=0)
 
 # Сохраняем документ
 doc.save('Мат баланс.docx')
