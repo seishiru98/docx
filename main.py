@@ -103,7 +103,16 @@ fig_counter = FigCounter(n_fig_start, 0.1)
 head_counter = HeadingCounter(n_heading, par_counter, table_counter, fig_counter)
 
 #-----------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------
+# Добавление нового раздела
+new_section = doc.add_section(WD_SECTION.NEW_PAGE)
+
+# Установка ориентации
+new_section.orientation = WD_ORIENT.PORTRAIT
+
+# Убедимся, что размеры страницы корректны для книжной ориентации
+if new_section.page_width > new_section.page_height:
+    new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
+
 ch_1 = head_counter.increment()
 heading = doc.add_heading(f'{ch_1:.0f} ВВЕДЕНИЕ', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
@@ -112,9 +121,17 @@ for run in heading.runs:
     set_paragraph_format(heading, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
                          space_after=0, space_before=0)
 
+#-----------------------------------------------------------------------------------------------------------------------
+# Добавление нового раздела
 new_section = doc.add_section(WD_SECTION.NEW_PAGE)
-#-----------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------
+
+# Установка ориентации
+new_section.orientation = WD_ORIENT.PORTRAIT
+
+# Убедимся, что размеры страницы корректны для книжной ориентации
+if new_section.page_width > new_section.page_height:
+    new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
+
 ch_2 = head_counter.increment()
 heading = doc.add_heading(f'{ch_2:.0f} ОБЩИЕ СВЕДЕНИЯ О ТЕХНОЛОГИИ «ДЕМЕРУС»', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
@@ -123,9 +140,18 @@ for run in heading.runs:
     set_paragraph_format(heading, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
                          space_after=0, space_before=0)
 
+#-----------------------------------------------------------------------------------------------------------------------
+# Добавление нового раздела
 new_section = doc.add_section(WD_SECTION.NEW_PAGE)
-#-----------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------
+
+# Установка ориентации
+new_section.orientation = WD_ORIENT.PORTRAIT
+
+# Убедимся, что размеры страницы корректны для книжной ориентации
+if new_section.page_width > new_section.page_height:
+    new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
+
+
 ch_3 = head_counter.increment()
 heading = doc.add_heading(f'{ch_3:.0f} ТЕХНИЧЕСКИЙ УРОВЕНЬ, ПАТЕНТОСПОСОБНОСТЬ И ПАТЕНТНАЯ ЧИСТОТА ПРОЦЕССА', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
@@ -134,9 +160,18 @@ for run in heading.runs:
     set_paragraph_format(heading, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
                          space_after=0, space_before=0)
 
+#-----------------------------------------------------------------------------------------------------------------------
+# Добавление нового раздела
 new_section = doc.add_section(WD_SECTION.NEW_PAGE)
-#-----------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------
+
+# Установка ориентации
+new_section.orientation = WD_ORIENT.PORTRAIT
+
+# Убедимся, что размеры страницы корректны для книжной ориентации
+if new_section.page_width > new_section.page_height:
+    new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
+
+
 ch_4 = head_counter.increment()
 heading = doc.add_heading(f'{ch_4:.0f} ХАРАКТЕРИСТИКА ИСХОДНОГО СЫРЬЯ, ПРОДУКТОВ, ОСНОВНЫХ И ВСПОМОГАТЕЛЬНЫХ МАТЕРИАЛОВ', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
@@ -145,9 +180,18 @@ for run in heading.runs:
     set_paragraph_format(heading, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
                          space_after=0, space_before=0)
 
+#-----------------------------------------------------------------------------------------------------------------------
+# Добавление нового раздела
 new_section = doc.add_section(WD_SECTION.NEW_PAGE)
-#-----------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------
+
+# Установка ориентации
+new_section.orientation = WD_ORIENT.PORTRAIT
+
+# Убедимся, что размеры страницы корректны для книжной ориентации
+if new_section.page_width > new_section.page_height:
+    new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
+
+
 ch_5 = head_counter.increment()
 heading = doc.add_heading(f'{ch_5:.0f} ТЕХНИЧЕСКАЯ ХАРАКТЕРИСТИКА ОТХОДОВ И ОТРАБОТАННОГО ВОЗДУХА', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
@@ -156,9 +200,10 @@ for run in heading.runs:
     set_paragraph_format(heading, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
                          space_after=0, space_before=0)
 
+#-----------------------------------------------------------------------------------------------------------------------
 new_section = doc.add_section(WD_SECTION.NEW_PAGE)
-#-----------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------
+new_section.orientation = WD_ORIENT.PORTRAIT
+
 ch_6 = head_counter.increment()
 heading = doc.add_heading(f'{ch_6:.0f} ТЕХНОЛОГИЯ ПРОЦЕССА', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
@@ -167,9 +212,17 @@ for run in heading.runs:
     set_paragraph_format(heading, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
                          space_after=0, space_before=0)
 
+#-----------------------------------------------------------------------------------------------------------------------
+# Добавление нового раздела
 new_section = doc.add_section(WD_SECTION.NEW_PAGE)
-#-----------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------
+
+# Установка ориентации
+new_section.orientation = WD_ORIENT.PORTRAIT
+
+# Убедимся, что размеры страницы корректны для книжной ориентации
+if new_section.page_width > new_section.page_height:
+    new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
+
 ch_7 = head_counter.increment()
 heading = doc.add_heading(f'{ch_7:.0f} УСЛОВИЯ ПРОВЕДЕНИЯ ПРОЦЕССА «ДЕМЕРУС»', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
@@ -178,9 +231,10 @@ for run in heading.runs:
     set_paragraph_format(heading, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
                          space_after=0, space_before=0)
 
+#-----------------------------------------------------------------------------------------------------------------------
 new_section = doc.add_section(WD_SECTION.NEW_PAGE)
-#-----------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------
+new_section.orientation = WD_ORIENT.PORTRAIT
+
 ch_8 = head_counter.increment()
 heading = doc.add_heading(f'{ch_8:.0f} НОРМЫ РАСХОДА ОСНОВНЫХ И ВСПОМОГАТЕЛЬНЫХ МАТЕРИАЛОВ', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
@@ -189,9 +243,18 @@ for run in heading.runs:
     set_paragraph_format(heading, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
                          space_after=0, space_before=0)
 
+#-----------------------------------------------------------------------------------------------------------------------
+# Добавление нового раздела
 new_section = doc.add_section(WD_SECTION.NEW_PAGE)
-#-----------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------
+
+# Установка ориентации
+new_section.orientation = WD_ORIENT.PORTRAIT
+
+# Убедимся, что размеры страницы корректны для книжной ориентации
+if new_section.page_width > new_section.page_height:
+    new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
+
+
 ch_9 = head_counter.increment()
 heading = doc.add_heading(f'{ch_9} МАТЕРИАЛЬНЫЙ И ТЕПЛОВОЙ БАЛАНС ТЕХНОЛОГИИ «ДЕМЕРУС»', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
@@ -295,13 +358,18 @@ for line in text:
         set_font(run, 'Times New Roman', 14)
     set_paragraph_format(paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22, space_after=0, space_before=0)
 
-# Добавляем разрыв раздела и изменяем ориентацию на альбомную
+#-----------------------------------------------------------------------------------------------------------------------
+# Добавление нового раздела
 new_section = doc.add_section(WD_SECTION.NEW_PAGE)
-#-----------------------------------------------------------------------------------------------------------------------
-#new_section.orientation = WD_ORIENT.LANDSCAPE
-#new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
-#-----------------------------------------------------------------------------------------------------------------------
-# Добавляем второй параграф после разрыва раздела
+
+# Установка ориентации
+new_section.orientation = WD_ORIENT.PORTRAIT
+
+# Убедимся, что размеры страницы корректны для книжной ориентации
+if new_section.page_width > new_section.page_height:
+    new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
+
+
 table9_1 = table_counter.increment()
 
 def read_excel_data(filename, sheet_name):
@@ -354,26 +422,21 @@ if df is not None and fn is not None:
         columns.append(flow_tables[i][0])  # Номер потока
         columns.append(flow_tables[i][1])  # Доля потока
 
-    # Проверяем, что все колонки имеют одинаковое количество элементов
     len_status = all(len(col) == len(columns[0]) for col in columns)
     print(f"Все колонки имеют одинаковое количество элементов:", len_status)
 
-    # Разделение на страницы с table_name_comp и по 6 колонок на каждой
     page_size = 6
     for start in range(1, len(columns), page_size):
         end = start + page_size
         current_columns = [table_name_comp] + columns[start:end]
 
         if len(current_columns) < page_size + 1:
-            # Если текущая страница имеет меньше 7 колонок (включая table_name_comp), добавляем пустые колонки
             for _ in range(page_size + 1 - len(current_columns)):
                 current_columns.append([''] * len(table_name_comp))
 
-        # Добавляем таблицу с количеством строк, соответствующим размеру table_name_comp
         table = doc.add_table(rows=len(table_name_comp), cols=len(current_columns))
         table.style = 'Table Grid'
 
-        # Заполняем таблицу данными из current_columns
         for row_idx in range(len(table_name_comp)):
             for col_idx, col_data in enumerate(current_columns):
                 cell = table.cell(row_idx, col_idx)
@@ -400,5 +463,192 @@ if df is not None and fn is not None:
         set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
                              line_spacing=22, space_after=0, space_before=0)
 
+
+#-----------------------------------------------------------------------------------------------------------------------
+table9_2 = table_counter.increment()
+
+def generate_thermodynamics_tables(df, flow_names, flow_nums):
+    thermodynamics_id = td.iloc[:, 0]
+    table_thermodynamics_id = ['Номер потока по схеме', 'Наименование потока', 'Показатели'] + thermodynamics_id.tolist()
+
+    thermodynamics_tables = []
+    for i in range(len(flow_names)):
+        liquid_phase = td.iloc[:, 2 + i * 2].tolist()
+        gas_phase = td.iloc[:, 3 + i * 2].tolist()
+
+        table_liquid_phase = [flow_nums[i], flow_names[i], 'Жидкая фаза'] + [f'{item:.4f}' for item in liquid_phase]
+        table_gas_phase = ['', '', 'Газовая фаза'] + [f'{item:.4f}' for item in gas_phase]
+
+        thermodynamics_tables.append((table_liquid_phase, table_gas_phase))
+
+    return table_thermodynamics_id, thermodynamics_tables
+
+
+# Чтение данных из Excel-файла
+td = read_excel_data('database.xlsx', 'Термодинамика')
+fn = read_excel_data('database.xlsx', 'Название потоков')
+
+if td is not None and fn is not None:
+    flow_names = fn.iloc[:, 1].tolist()
+    flow_nums = fn.iloc[:, 0].tolist()
+
+    table_thermodynamics_id, thermodynamics_tables = generate_thermodynamics_tables(td, flow_names, flow_nums)
+
+    paragraph_after_break = doc.add_paragraph(
+        f'Таблица {table9_2} – Термодинамические характеристики потоков процесса очистки СУГ')
+    paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in paragraph_after_break.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
+                         line_spacing=22, space_after=0, space_before=0)
+    columns = [table_thermodynamics_id]
+    for i in range(len(thermodynamics_tables)):
+        columns.append(thermodynamics_tables[i][0])  # Номер потока
+        columns.append(thermodynamics_tables[i][1])  # Доля потока
+
+    len_status = all(len(col) == len(columns[0]) for col in columns)
+    print(f"Все колонки имеют одинаковое количество элементов:", len_status)
+
+    page_size = 6
+    for start in range(1, len(columns), page_size):
+        end = start + page_size
+        current_columns = [table_thermodynamics_id] + columns[start:end]
+
+        if len(current_columns) < page_size + 1:
+            for _ in range(page_size + 1 - len(current_columns)):
+                current_columns.append([''] * len(table_thermodynamics_id))
+
+        table = doc.add_table(rows=len(table_thermodynamics_id), cols=len(current_columns))
+        table.style = 'Table Grid'
+
+        for row_idx in range(len(table_thermodynamics_id)):
+            for col_idx, col_data in enumerate(current_columns):
+                cell = table.cell(row_idx, col_idx)
+                cell_paragraph = cell.paragraphs[0]
+                cell_paragraph.text = str(col_data[row_idx])
+                cell_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+                for run in cell_paragraph.runs:
+                    set_font(run, 'Times New Roman', 12)
+                set_paragraph_format(cell_paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
+                                     line_spacing=18, space_after=0, space_before=0)
+
+        # Объединение ячеек
+        for i in range(1, len(current_columns) - 1, 2):
+            table.cell(0, i).merge(table.cell(0, i + 1))
+            table.cell(1, i).merge(table.cell(1, i + 1))
+
+        doc.add_page_break()
+
+        paragraph_after_break = doc.add_paragraph(
+            f'Продолжение таблицы {table9_2} – Термодинамические характеристики потоков процесса очистки СУГ')
+        paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+        for run in paragraph_after_break.runs:
+            set_font(run, 'Times New Roman', 14)
+        set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
+                             line_spacing=22, space_after=0, space_before=0)
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Добавление нового раздела
+new_section = doc.add_section(WD_SECTION.NEW_PAGE)
+
+# Установка ориентации
+new_section.orientation = WD_ORIENT.LANDSCAPE
+
+# Убедимся, что размеры страницы корректны для книжной ориентации
+if new_section.page_width < new_section.page_height:
+    new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
+
+
+fig9_1 = fig_counter.increment()
+paragraph_after_break = doc.add_paragraph(
+        f'Рисунок {fig9_1} – Материальные потоки блока очистки СУГ от меркаптанов')
+paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+for run in paragraph_after_break.runs:
+    set_font(run, 'Times New Roman', 14)
+set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
+                     line_spacing=22, space_after=0, space_before=0)
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Добавление нового раздела
+# Добавление нового раздела
+new_section = doc.add_section(WD_SECTION.NEW_PAGE)
+
+# Установка ориентации
+new_section.orientation = WD_ORIENT.LANDSCAPE
+
+# Убедимся, что размеры страницы корректны для альбомной ориентации
+if new_section.page_width < new_section.page_height:
+    new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
+
+
+ch_10 = head_counter.increment()
+heading = doc.add_heading(f'{ch_10} ФИЗИКО-ХИМИЧЕСКИЕ ОСНОВЫ ПРОЦЕССА', level=1)
+heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+for run in heading.runs:
+    set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(heading, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
+                         space_after=0, space_before=0)
+
+table10_1 = table_counter.increment()
+
+text = [f'',
+        f'',
+        f'Таблица {table10_1} – Химизм процесса']
+
+for line in text:
+    paragraph_after_break = doc.add_paragraph(line)
+    paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in paragraph_after_break.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22, space_after=0, space_before=0)
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Добавление нового раздела
+new_section = doc.add_section(WD_SECTION.NEW_PAGE)
+
+# Установка ориентации
+new_section.orientation = WD_ORIENT.PORTRAIT
+
+# Убедимся, что размеры страницы корректны для книжной ориентации
+if new_section.page_width > new_section.page_height:
+    new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
+
+
+ch_11 = head_counter.increment()
+heading = doc.add_heading(f'{ch_11} СПЕЦИФИКАЦИЯ ОСНОВНОГО ТЕХНОЛОГИЧЕСКОГО ОБОРУДОВАНИЯ', level=1)
+heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+for run in heading.runs:
+    set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(heading, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
+                         space_after=0, space_before=0)
+
+ch_11_par_1 = par_counter.increment()
+
+text = [f'',
+        f'',
+        f'{ch_11_par_1} Статическое оборудование']
+
+# Добавление каждого абзаца по отдельности
+for line in text:
+    paragraph_after_break = doc.add_paragraph(line)
+    paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in paragraph_after_break.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22, space_after=0, space_before=0)
+
+table11_1 = par_counter.increment()
+
+text = [f'',
+        f'Таблица {table11_1} – Спецификация статического оборудования']
+
+# Добавление каждого абзаца по отдельности
+for line in text:
+    paragraph_after_break = doc.add_paragraph(line)
+    paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in paragraph_after_break.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22, space_after=0, space_before=0)
+
+doc.add_page_break()
 # Сохраняем документ
 doc.save('Мат баланс.docx')
