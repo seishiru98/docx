@@ -91,16 +91,15 @@ table_counter = TableCounter(n_table_start, 0.1)
 fig_counter = FigCounter(n_fig_start, 0.1)
 head_counter = HeadingCounter(n_heading, par_counter, table_counter, fig_counter)
 
-# Инициализация счетчиков
-n_heading = 1
-n_paragraph_start = n_heading + 0.1
-n_table_start = n_heading + 0.1
-n_fig_start = n_heading + 0.1
-
-par_counter = ParagraphCounter(n_paragraph_start, 0.1)
-table_counter = TableCounter(n_table_start, 0.1)
-fig_counter = FigCounter(n_fig_start, 0.1)
-head_counter = HeadingCounter(n_heading, par_counter, table_counter, fig_counter)
+def read_excel_data(filename, sheet_name):
+    try:
+        return pd.read_excel(filename, sheet_name=sheet_name)
+    except FileNotFoundError:
+        print(f"ОШИБКА: Файл {filename} не найден.")
+    except ValueError:
+        print(f"ОШИБКА: Лист {sheet_name} не найден в файле {filename}.")
+    except Exception as e:
+        print(f"ОШИБКА: Произошла ошибка при чтении файла {filename}: {e}")
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Добавление нового раздела
@@ -114,6 +113,7 @@ if new_section.page_width > new_section.page_height:
     new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
 
 ch_1 = head_counter.increment()
+
 heading = doc.add_heading(f'{ch_1:.0f} ВВЕДЕНИЕ', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
 for run in heading.runs:
@@ -133,6 +133,7 @@ if new_section.page_width > new_section.page_height:
     new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
 
 ch_2 = head_counter.increment()
+
 heading = doc.add_heading(f'{ch_2:.0f} ОБЩИЕ СВЕДЕНИЯ О ТЕХНОЛОГИИ «ДЕМЕРУС»', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
 for run in heading.runs:
@@ -153,6 +154,7 @@ if new_section.page_width > new_section.page_height:
 
 
 ch_3 = head_counter.increment()
+
 heading = doc.add_heading(f'{ch_3:.0f} ТЕХНИЧЕСКИЙ УРОВЕНЬ, ПАТЕНТОСПОСОБНОСТЬ И ПАТЕНТНАЯ ЧИСТОТА ПРОЦЕССА', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
 for run in heading.runs:
@@ -173,6 +175,7 @@ if new_section.page_width > new_section.page_height:
 
 
 ch_4 = head_counter.increment()
+
 heading = doc.add_heading(f'{ch_4:.0f} ХАРАКТЕРИСТИКА ИСХОДНОГО СЫРЬЯ, ПРОДУКТОВ, ОСНОВНЫХ И ВСПОМОГАТЕЛЬНЫХ МАТЕРИАЛОВ', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
 for run in heading.runs:
@@ -193,6 +196,7 @@ if new_section.page_width > new_section.page_height:
 
 
 ch_5 = head_counter.increment()
+
 heading = doc.add_heading(f'{ch_5:.0f} ТЕХНИЧЕСКАЯ ХАРАКТЕРИСТИКА ОТХОДОВ И ОТРАБОТАННОГО ВОЗДУХА', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
 for run in heading.runs:
@@ -205,6 +209,7 @@ new_section = doc.add_section(WD_SECTION.NEW_PAGE)
 new_section.orientation = WD_ORIENT.PORTRAIT
 
 ch_6 = head_counter.increment()
+
 heading = doc.add_heading(f'{ch_6:.0f} ТЕХНОЛОГИЯ ПРОЦЕССА', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
 for run in heading.runs:
@@ -224,6 +229,7 @@ if new_section.page_width > new_section.page_height:
     new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
 
 ch_7 = head_counter.increment()
+
 heading = doc.add_heading(f'{ch_7:.0f} УСЛОВИЯ ПРОВЕДЕНИЯ ПРОЦЕССА «ДЕМЕРУС»', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
 for run in heading.runs:
@@ -236,12 +242,98 @@ new_section = doc.add_section(WD_SECTION.NEW_PAGE)
 new_section.orientation = WD_ORIENT.PORTRAIT
 
 ch_8 = head_counter.increment()
+
 heading = doc.add_heading(f'{ch_8:.0f} НОРМЫ РАСХОДА ОСНОВНЫХ И ВСПОМОГАТЕЛЬНЫХ МАТЕРИАЛОВ', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
 for run in heading.runs:
     set_font(run, 'Times New Roman', 14)
     set_paragraph_format(heading, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
                          space_after=0, space_before=0)
+
+table8_1 = table_counter.increment()
+
+text = [f'',
+        f'',
+        f'Таблица {table8_1} – Нормы расхода химреагентов и катализаторов при демеркаптанизации СУГ']
+
+for line in text:
+    paragraph_after_break = doc.add_paragraph(line)
+    paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in paragraph_after_break.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25,
+                         line_spacing=22, space_after=0, space_before=0)
+
+df8_1 = read_excel_data('НОРМЫ РАСХОДА ОСНОВНЫХ И ВСПОМОГАТЕЛЬНЫХ МАТЕРИАЛОВ.xlsx', '8.1')
+
+# Добавляем таблицу в документ
+table = doc.add_table(rows=1, cols=len(df8_1.columns))
+table.style = 'Table Grid'
+
+# Добавляем заголовки таблицы
+hdr_cells = table.rows[0].cells
+for i, column_name in enumerate(df8_1.columns):
+    cell_paragraph = hdr_cells[i].paragraphs[0]
+    cell_paragraph.text = column_name
+    cell_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in cell_paragraph.runs:
+        set_font(run, 'Times New Roman', 12)
+    set_paragraph_format(cell_paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
+                         line_spacing=18, space_after=0, space_before=0)
+
+# Заполняем таблицу данными из DataFrame
+for index, row in df8_1.iterrows():
+    row_cells = table.add_row().cells
+    for i, value in enumerate(row):
+        cell_paragraph = row_cells[i].paragraphs[0]
+        cell_paragraph.text = str(value)
+        cell_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+        for run in cell_paragraph.runs:
+            set_font(run, 'Times New Roman', 12)
+        set_paragraph_format(cell_paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
+                             line_spacing=18, space_after=0, space_before=0)
+
+table8_2 = table_counter.increment()
+
+text = [f'',
+        f'Таблица {table8_2} – Эксплуатационные расходы энергоресурсов при демеркаптанизации СУГ']
+
+for line in text:
+    paragraph_after_break = doc.add_paragraph(line)
+    paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in paragraph_after_break.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25,
+                         line_spacing=22, space_after=0, space_before=0)
+
+df8_2 = read_excel_data('НОРМЫ РАСХОДА ОСНОВНЫХ И ВСПОМОГАТЕЛЬНЫХ МАТЕРИАЛОВ.xlsx', '8.2')
+
+# Добавляем таблицу в документ
+table = doc.add_table(rows=1, cols=len(df8_2.columns))
+table.style = 'Table Grid'
+
+# Добавляем заголовки таблицы
+hdr_cells = table.rows[0].cells
+for i, column_name in enumerate(df8_2.columns):
+    cell_paragraph = hdr_cells[i].paragraphs[0]
+    cell_paragraph.text = column_name
+    cell_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in cell_paragraph.runs:
+        set_font(run, 'Times New Roman', 12)
+    set_paragraph_format(cell_paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
+                         line_spacing=18, space_after=0, space_before=0)
+
+# Заполняем таблицу данными из DataFrame
+for index, row in df8_2.iterrows():
+    row_cells = table.add_row().cells
+    for i, value in enumerate(row):
+        cell_paragraph = row_cells[i].paragraphs[0]
+        cell_paragraph.text = str(value)
+        cell_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+        for run in cell_paragraph.runs:
+            set_font(run, 'Times New Roman', 12)
+        set_paragraph_format(cell_paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
+                             line_spacing=18, space_after=0, space_before=0)
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Добавление нового раздела
@@ -254,8 +346,8 @@ new_section.orientation = WD_ORIENT.PORTRAIT
 if new_section.page_width > new_section.page_height:
     new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
 
-
 ch_9 = head_counter.increment()
+
 heading = doc.add_heading(f'{ch_9} МАТЕРИАЛЬНЫЙ И ТЕПЛОВОЙ БАЛАНС ТЕХНОЛОГИИ «ДЕМЕРУС»', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
 for run in heading.runs:
@@ -264,6 +356,7 @@ for run in heading.runs:
                          space_after=0, space_before=0)
 
 ch_9_par_1 = par_counter.increment()
+
 content1 = [
     "",
     "",
@@ -294,6 +387,7 @@ content1 = [
 ]
 
 ch_9_par_2 = par_counter.increment()
+
 content2 = [
     "",
     f"{ch_9_par_2:.2} Расчетный материальный баланс технологии «ДЕМЕРУС»",
@@ -319,6 +413,7 @@ content2 = [
 ]
 
 ch_9_par_3 = par_counter.increment()
+
 content3 = [
     "",
     f"{ch_9_par_3:.2} Тепловой баланс стадии экстракции меркаптанов в {None}",
@@ -350,13 +445,14 @@ content3 = [
 
 
 text = content1 + content2 + content3
-# Добавление каждого абзаца по отдельности
+
 for line in text:
     paragraph = doc.add_paragraph(line)
     paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
     for run in paragraph.runs:
         set_font(run, 'Times New Roman', 14)
-    set_paragraph_format(paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22, space_after=0, space_before=0)
+    set_paragraph_format(paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
+                         space_after=0, space_before=0)
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Добавление нового раздела
@@ -371,17 +467,6 @@ if new_section.page_width > new_section.page_height:
 
 
 table9_1 = table_counter.increment()
-
-def read_excel_data(filename, sheet_name):
-    try:
-        return pd.read_excel(filename, sheet_name=sheet_name)
-    except FileNotFoundError:
-        print(f"ОШИБКА: Файл {filename} не найден.")
-    except ValueError:
-        print(f"ОШИБКА: Лист {sheet_name} не найден в файле {filename}.")
-    except Exception as e:
-        print(f"ОШИБКА: Произошла ошибка при чтении файла {filename}: {e}")
-
 
 def generate_flow_tables(df, flow_names, flow_nums):
     name_comp = df.iloc[:, 0]
@@ -532,7 +617,6 @@ if td is not None and fn is not None:
                 set_paragraph_format(cell_paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
                                      line_spacing=18, space_after=0, space_before=0)
 
-        # Объединение ячеек
         for i in range(1, len(current_columns) - 1, 2):
             table.cell(0, i).merge(table.cell(0, i + 1))
             table.cell(1, i).merge(table.cell(1, i + 1))
@@ -560,6 +644,7 @@ if new_section.page_width < new_section.page_height:
 
 
 fig9_1 = fig_counter.increment()
+
 paragraph_after_break = doc.add_paragraph(
         f'Рисунок {fig9_1} – Материальные потоки блока очистки СУГ от меркаптанов')
 paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
@@ -570,7 +655,6 @@ set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, f
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Добавление нового раздела
-# Добавление нового раздела
 new_section = doc.add_section(WD_SECTION.NEW_PAGE)
 
 # Установка ориентации
@@ -580,8 +664,8 @@ new_section.orientation = WD_ORIENT.LANDSCAPE
 if new_section.page_width < new_section.page_height:
     new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
 
-
 ch_10 = head_counter.increment()
+
 heading = doc.add_heading(f'{ch_10} ФИЗИКО-ХИМИЧЕСКИЕ ОСНОВЫ ПРОЦЕССА', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
 for run in heading.runs:
@@ -600,7 +684,8 @@ for line in text:
     paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
     for run in paragraph_after_break.runs:
         set_font(run, 'Times New Roman', 14)
-    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22, space_after=0, space_before=0)
+    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25,
+                         line_spacing=22, space_after=0, space_before=0)
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Добавление нового раздела
@@ -613,8 +698,8 @@ new_section.orientation = WD_ORIENT.PORTRAIT
 if new_section.page_width > new_section.page_height:
     new_section.page_width, new_section.page_height = new_section.page_height, new_section.page_width
 
-
 ch_11 = head_counter.increment()
+
 heading = doc.add_heading(f'{ch_11} СПЕЦИФИКАЦИЯ ОСНОВНОГО ТЕХНОЛОГИЧЕСКОГО ОБОРУДОВАНИЯ', level=1)
 heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
 for run in heading.runs:
@@ -628,27 +713,28 @@ text = [f'',
         f'',
         f'{ch_11_par_1} Статическое оборудование']
 
-# Добавление каждого абзаца по отдельности
 for line in text:
     paragraph_after_break = doc.add_paragraph(line)
     paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
     for run in paragraph_after_break.runs:
         set_font(run, 'Times New Roman', 14)
-    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22, space_after=0, space_before=0)
+    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25,
+                         line_spacing=22, space_after=0, space_before=0)
 
 table11_1 = par_counter.increment()
 
 text = [f'',
         f'Таблица {table11_1} – Спецификация статического оборудования']
 
-# Добавление каждого абзаца по отдельности
 for line in text:
     paragraph_after_break = doc.add_paragraph(line)
     paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
     for run in paragraph_after_break.runs:
         set_font(run, 'Times New Roman', 14)
-    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22, space_after=0, space_before=0)
+    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25,
+                         line_spacing=22, space_after=0, space_before=0)
 
 doc.add_page_break()
+
 # Сохраняем документ
 doc.save('Мат баланс.docx')
