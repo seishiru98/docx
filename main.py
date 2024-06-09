@@ -217,6 +217,31 @@ for run in heading.runs:
     set_paragraph_format(heading, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
                          space_after=0, space_before=0)
 
+ch_6_par_1 = par_counter.increment()
+fig6_1 = fig_counter.increment()
+
+content1 = [
+    "",
+    "",
+    f"Принципиальная технологическая схема демеркаптанизации СУГ приведена на рис. {fig6_1}",
+    f"Исходное сырье с содержанием сероводорода до {None} % мас.; диоксида углерода до {None} % мас., карбонилсульфида по сере до {None} % мас., метилмеркаптана по сере до {None} % мас., этилмеркаптана по сере до {None} % мас. и пропилмеркаптана по сере до {None} % мас. подается в куб насадочного экстрактора {None}. Расход СУГ в экстрактор составляет до {None} кг/ч, температура 40ºС с давлением 21,0 кгс/см2 (изб.). В среднюю часть экстрактора С-301 поверх насадок подается регенерированный водный раствор щелочи с температурой 30÷45°С из куба отстойника дисульфидов V-303. В процессе взаимодействия СУГ со стекающим вниз щелочным раствором происходит хемосорбция содержащихся в нем меркаптанов по реакции 1, щелочной гидролиз карбонилсульфида на 40÷60% по реакции 2, а также хемосорбция сероводорода и диоксида углерода по реакциям 3-4: ",
+    f"RSH + NaOH = RSNa + H2O",
+    f"COS + H2O → CO2 + H2S",
+    f"H2S + 2NaOH → Na2S + 2H2O",
+    f"CO2 + 2NaOH → Na2CO3 + H2O",
+    f"Очищенное щелочью от меркаптановых соединений сырье проходит далее вверх через отстойную зону экстрактора {None}, снабженную металлическим каплеотбойником."
+]
+
+text = content1
+
+for line in text:
+    paragraph = doc.add_paragraph(line)
+    paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in paragraph.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
+                         space_after=0, space_before=0)
+
 #-----------------------------------------------------------------------------------------------------------------------
 # Добавление нового раздела
 new_section = doc.add_section(WD_SECTION.NEW_PAGE)
@@ -264,7 +289,7 @@ for line in text:
     set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25,
                          line_spacing=22, space_after=0, space_before=0)
 
-df8_1 = read_excel_data('НОРМЫ РАСХОДА ОСНОВНЫХ И ВСПОМОГАТЕЛЬНЫХ МАТЕРИАЛОВ.xlsx', '8.1')
+df8_1 = read_excel_data('database.xlsx', '8.1')
 
 # Добавляем таблицу в документ
 table = doc.add_table(rows=1, cols=len(df8_1.columns))
@@ -306,7 +331,7 @@ for line in text:
     set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25,
                          line_spacing=22, space_after=0, space_before=0)
 
-df8_2 = read_excel_data('НОРМЫ РАСХОДА ОСНОВНЫХ И ВСПОМОГАТЕЛЬНЫХ МАТЕРИАЛОВ.xlsx', '8.2')
+df8_2 = read_excel_data('database.xlsx', '8.2')
 
 # Добавляем таблицу в документ
 table = doc.add_table(rows=1, cols=len(df8_2.columns))
