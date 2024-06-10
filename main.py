@@ -262,6 +262,64 @@ for run in heading.runs:
     set_paragraph_format(heading, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
                          space_after=0, space_before=0)
 
+table7_1 = table_counter.increment()
+
+text = [f'',
+        f'',
+        f'Таблица {table7_1} – Условия проведения процесса «ДЕМЕРУС»']
+
+for line in text:
+    paragraph_after_break = doc.add_paragraph(line)
+    paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in paragraph_after_break.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25,
+                         line_spacing=22, space_after=0, space_before=0)
+
+df7_1 = read_excel_data('database.xlsx', '7.1')
+df7_1 = df7_1.fillna('')
+
+# Добавляем таблицу в документ
+table = doc.add_table(rows=1, cols=len(df7_1.columns))
+table.style = 'Table Grid'
+
+# Добавляем заголовки таблицы
+hdr_cells = table.rows[0].cells
+for i, column_name in enumerate(df7_1.columns):
+    cell_paragraph = hdr_cells[i].paragraphs[0]
+    cell_paragraph.text = column_name
+    cell_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in cell_paragraph.runs:
+        set_font(run, 'Times New Roman', 12)
+    set_paragraph_format(cell_paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
+                         line_spacing=18, space_after=0, space_before=0)
+
+# Заполняем таблицу данными из DataFrame
+for index, row in df7_1.iterrows():
+    row_cells = table.add_row().cells
+    for i, value in enumerate(row):
+        cell_paragraph = row_cells[i].paragraphs[0]
+        cell_paragraph.text = str(value)
+        cell_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+        for run in cell_paragraph.runs:
+            set_font(run, 'Times New Roman', 12)
+        set_paragraph_format(cell_paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
+                             line_spacing=18, space_after=0, space_before=0)
+
+# Объединяем пустые ячейки в столбцах с предыдущими непустыми
+for col_idx in range(len(df7_1.columns)):
+    merge_start = 1  # Начинаем с первой строки данных
+    for row_idx in range(2, len(table.rows) + 1):  # Начинаем со второй строки данных
+        cell = table.cell(row_idx - 1, col_idx)
+        if cell.text == "":
+            continue
+        if merge_start < row_idx - 1:
+            table.cell(merge_start - 1, col_idx).merge(table.cell(row_idx - 2, col_idx))
+        merge_start = row_idx
+    # Объединяем последние ячейки, если они пустые
+    if merge_start < len(table.rows):
+        table.cell(merge_start - 1, col_idx).merge(table.cell(len(table.rows) - 1, col_idx))
+
 #-----------------------------------------------------------------------------------------------------------------------
 new_section = doc.add_section(WD_SECTION.NEW_PAGE)
 new_section.orientation = WD_ORIENT.PORTRAIT
@@ -290,6 +348,7 @@ for line in text:
                          line_spacing=22, space_after=0, space_before=0)
 
 df8_1 = read_excel_data('database.xlsx', '8.1')
+df8_1 = df8_1.fillna('')
 
 # Добавляем таблицу в документ
 table = doc.add_table(rows=1, cols=len(df8_1.columns))
@@ -318,6 +377,20 @@ for index, row in df8_1.iterrows():
         set_paragraph_format(cell_paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
                              line_spacing=18, space_after=0, space_before=0)
 
+# Объединяем пустые ячейки в столбцах с предыдущими непустыми
+for col_idx in range(len(df8_1.columns)):
+    merge_start = 1  # Начинаем с первой строки данных
+    for row_idx in range(2, len(table.rows) + 1):  # Начинаем со второй строки данных
+        cell = table.cell(row_idx - 1, col_idx)
+        if cell.text == "":
+            continue
+        if merge_start < row_idx - 1:
+            table.cell(merge_start - 1, col_idx).merge(table.cell(row_idx - 2, col_idx))
+        merge_start = row_idx
+    # Объединяем последние ячейки, если они пустые
+    if merge_start < len(table.rows):
+        table.cell(merge_start - 1, col_idx).merge(table.cell(len(table.rows) - 1, col_idx))
+
 table8_2 = table_counter.increment()
 
 text = [f'',
@@ -332,6 +405,7 @@ for line in text:
                          line_spacing=22, space_after=0, space_before=0)
 
 df8_2 = read_excel_data('database.xlsx', '8.2')
+df8_2 = df8_2.fillna('')
 
 # Добавляем таблицу в документ
 table = doc.add_table(rows=1, cols=len(df8_2.columns))
@@ -360,6 +434,19 @@ for index, row in df8_2.iterrows():
         set_paragraph_format(cell_paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
                              line_spacing=18, space_after=0, space_before=0)
 
+# Объединяем пустые ячейки в столбцах с предыдущими непустыми
+for col_idx in range(len(df8_2.columns)):
+    merge_start = 1  # Начинаем с первой строки данных
+    for row_idx in range(2, len(table.rows) + 1):  # Начинаем со второй строки данных
+        cell = table.cell(row_idx - 1, col_idx)
+        if cell.text == "":
+            continue
+        if merge_start < row_idx - 1:
+            table.cell(merge_start - 1, col_idx).merge(table.cell(row_idx - 2, col_idx))
+        merge_start = row_idx
+    # Объединяем последние ячейки, если они пустые
+    if merge_start < len(table.rows):
+        table.cell(merge_start - 1, col_idx).merge(table.cell(len(table.rows) - 1, col_idx))
 #-----------------------------------------------------------------------------------------------------------------------
 # Добавление нового раздела
 new_section = doc.add_section(WD_SECTION.NEW_PAGE)
@@ -758,6 +845,52 @@ for line in text:
         set_font(run, 'Times New Roman', 14)
     set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25,
                          line_spacing=22, space_after=0, space_before=0)
+
+df11_1 = read_excel_data('database.xlsx', '11.1')
+df11_1 = df11_1.fillna('')
+
+# Добавляем таблицу в документ
+table = doc.add_table(rows=1, cols=len(df11_1.columns))
+table.style = 'Table Grid'
+
+# Добавляем заголовки таблицы
+hdr_cells = table.rows[0].cells
+for i, column_name in enumerate(df11_1.columns):
+    cell_paragraph = hdr_cells[i].paragraphs[0]
+    cell_paragraph.text = column_name
+    cell_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in cell_paragraph.runs:
+        set_font(run, 'Times New Roman', 12)
+    set_paragraph_format(cell_paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
+                         line_spacing=18, space_after=0, space_before=0)
+
+# Заполняем таблицу данными из DataFrame
+for index, row in df11_1.iterrows():
+    row_cells = table.add_row().cells
+    for i, value in enumerate(row):
+        cell_paragraph = row_cells[i].paragraphs[0]
+        cell_paragraph.text = str(value)
+        cell_paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+        for run in cell_paragraph.runs:
+            set_font(run, 'Times New Roman', 12)
+        set_paragraph_format(cell_paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=0.0,
+                             line_spacing=18, space_after=0, space_before=0)
+
+# Объединяем пустые ячейки в столбцах с предыдущими непустыми
+for col_idx in range(len(df11_1.columns)):
+    merge_start = 1  # Начинаем с первой строки данных
+    for row_idx in range(2, len(table.rows) + 1):  # Начинаем со второй строки данных
+        cell = table.cell(row_idx - 1, col_idx)
+        if cell.text == "":
+            continue
+        if merge_start < row_idx - 1:
+            table.cell(merge_start - 1, col_idx).merge(table.cell(row_idx - 2, col_idx))
+        merge_start = row_idx
+    # Объединяем последние ячейки, если они пустые
+    if merge_start < len(table.rows):
+        table.cell(merge_start - 1, col_idx).merge(table.cell(len(table.rows) - 1, col_idx))
+
+
 
 doc.add_page_break()
 
