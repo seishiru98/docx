@@ -18,8 +18,7 @@ def read_excel_data(filename, sheet_name):
 def add_header(doc, header_text):
     paragraph = doc.add_paragraph()
     run = paragraph.add_run(header_text)
-    run.bold = True
-    run.font.size = Pt(12)
+    run.font.size = Pt(14)
     paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
 def add_table(doc, df, start_row, end_row):
@@ -72,10 +71,10 @@ df7_1 = read_excel_data('database.xlsx', '7.1')
 df7_1 = df7_1.fillna('')
 
 doc = Document()
-table_name = '8.2'
+table_name = '7.1'
 header_text = f'Таблица {table_name} – Эксплуатационные расходы энергоресурсов при демеркаптанизации СУГ'
 
-rows_per_page = 10  # Adjust this number based on your page size and table formatting
+rows_per_page = 13  # Adjust this number based on your page size and table formatting
 
 total_rows = len(df7_1)
 start_row = 0
@@ -88,4 +87,4 @@ while start_row < total_rows:
     if start_row < total_rows:
         insert_page_break(doc)
 
-doc.save('output.docx')
+
