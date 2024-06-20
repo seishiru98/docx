@@ -6,9 +6,6 @@ from docx.enum.text import WD_PARAGRAPH_ALIGNMENT, WD_ALIGN_PARAGRAPH
 from docx.enum.section import WD_SECTION, WD_ORIENT
 import pandas as pd
 
-import input_data as in_data
-import calc
-
 # Создаем новый документ
 doc = Document()
 
@@ -156,6 +153,80 @@ def read_excel_data(filename, sheet_name):
         print(f"ОШИБКА: Произошла ошибка при чтении файла {filename}: {e}")
 
 #-----------------------------------------------------------------------------------------------------------------------
+
+text = ['ООО «НТЦ «Ахмадуллины»',
+        '']
+
+for line in text:
+    paragraph = doc.add_paragraph(line)
+    paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    for run in paragraph.runs:
+        set_font(run, 'Times New Roman', 18)
+    set_paragraph_format(paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
+                         space_after=0, space_before=0)
+
+text = ['УТВЕРЖДАЮ',
+        'Генеральный директор',
+        'Р.М. Ахмадуллин',
+       f'«{None}» {None} {None} года',
+        '']
+
+for line in text:
+    paragraph = doc.add_paragraph(line)
+    paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
+    for run in paragraph.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
+                         space_after=0, space_before=0)
+
+text = ['Исходные данные для проектирования',
+        'блока демеркаптанизации СУГ установки замедленного коксования Комплекса глубокой переработки нефти',
+        '(базовый проект)',
+        '']
+
+for line in text:
+    paragraph = doc.add_paragraph(line)
+    paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    for run in paragraph.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
+                         space_after=0, space_before=0)
+
+text = ['198-22-001.001.009-ИД']
+
+for line in text:
+    paragraph = doc.add_paragraph(line)
+    paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    for run in paragraph.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
+                         space_after=0, space_before=0)
+
+text = ['В настоящем документе содержится конфиденциальная информация относительно технологии «Демерус», включая эксплуатационные условия и технологические возможности, которые не могут быть раскрыты неуполномоченным лицам. Представленные материалы являются собственностью Лицензиара. Получая настоящую информацию, вы соглашаетесь не использовать ее ни для каких других целей, кроме тех, которые согласованы с Лицензиаром в письменной форме, не воспроизводить этот документ полностью или частично и не раскрывать его содержимое третьим лицам без письменного разрешения Лицензиара.',
+        '',
+        '',
+        '',
+        '',
+        '']
+
+for line in text:
+    paragraph = doc.add_paragraph(line)
+    paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in paragraph.runs:
+        set_font(run, 'Times New Roman', 12)
+    set_paragraph_format(paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=18,
+                         space_after=0, space_before=0)
+
+text = ['Казань 2024']
+
+for line in text:
+    paragraph = doc.add_paragraph(line)
+    paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    for run in paragraph.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
+                         space_after=0, space_before=0)
+
 # Добавление нового раздела
 new_section = doc.add_section(WD_SECTION.NEW_PAGE)
 
@@ -173,6 +244,26 @@ heading.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
 for run in heading.runs:
     set_font(run, 'Times New Roman', 14)
     set_paragraph_format(heading, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
+                         space_after=0, space_before=0)
+
+text = ['',
+        '',
+        'Настоящий документ разработан на основании договора № 13-2/22 от 10.10.2022 г. в соответствии с Техническим Заданием на разработку Базового проекта очистки сжиженных углеводородных газов от меркаптанов АО «Инженерно-промышленная нефтехимическая компания» для ПАО «Славнефть-ЯНОС».'
+        'Блок щелочной очистки СУГ предназначен для удаления меркаптанов и остаточного сероводорода из СУГ и рассчитан на переработку по номинальной производительности 16210,0 кг/ч СУГ.',
+        'В состав блока щелочной очистки «ДЕМЕРУС» входят:',
+        '– узел очистки СУГ от меркаптановой серы и остаточного сероводорода водным раствором гидроксида натрия;',
+        '– окислительно-каталитическая регенерация щелочного раствора;',
+        '– реагентное хозяйство (емкость хранения и приготовления щелочного раствора V-305).',
+        'Разработчик Базового проекта блока щелочной очистки СУГ «ДЕМЕРУС» с регенерацией отработанного раствора щелочи – ООО «НТЦ «Ахмадуллины».',
+        'Режим работы блока щелочной очистки СУГ «ДЕМЕРУС» с регенерацией отработанного раствора щелочи – круглосуточный, круглогодичный 8760 часов в год. Расчетный период непрерывной эксплуатации установки между остановками на капитальный ремонт – 48 месяцев. Срок службы оборудования не менее 20 лет. Срок службы катализатора не менее 8 лет. При расчете и подборе оборудования, согласно Технического задания на проектирование, был принят диапазон устойчивой производительности 60÷110% от расчетного расхода.',
+        '']
+
+for line in text:
+    paragraph = doc.add_paragraph(line)
+    paragraph.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in paragraph.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph, left_indent=0.0, right_indent=0.0, first_line_indent=1.25, line_spacing=22,
                          space_after=0, space_before=0)
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -781,7 +872,7 @@ table10_1 = table_counter.increment()
 
 text = [f'',
         f'',
-        f'Таблица {table10_1} – Химизм процесса']
+        f'Таблица {table10_1:.1f} – Химизм процесса']
 
 for line in text:
     paragraph_after_break = doc.add_paragraph(line)
@@ -815,7 +906,7 @@ ch_11_par_1 = par_counter.increment()
 
 text = [f'',
         f'',
-        f'{ch_11_par_1} Статическое оборудование']
+        f'{ch_11_par_1:.1f} Статическое оборудование']
 
 for line in text:
     paragraph_after_break = doc.add_paragraph(line)
@@ -824,8 +915,6 @@ for line in text:
         set_font(run, 'Times New Roman', 14)
     set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25,
                          line_spacing=22, space_after=0, space_before=0)
-
-table11_1 = par_counter.increment()
 
 text = [f'']
 
@@ -840,8 +929,8 @@ for line in text:
 df11_1 = read_excel_data('database.xlsx', '11.1')
 df11_1 = df11_1.fillna('')
 
-header_text_first = f'Таблица {table11_1} – Спецификация статического оборудования'
-header_text_next = f'Продолжение таблицы {table7_1} – Спецификация статического оборудования'
+header_text_first = f'Таблица {ch_11_par_1:.1f} – Спецификация статического оборудования'
+header_text_next = f'Продолжение таблицы {ch_11_par_1:.1f} – Спецификация статического оборудования'
 
 rows_per_page_first = 9  # Количество строк для первой таблицы
 rows_per_page_next = 12  # Количество строк для следующих таблиц
@@ -862,6 +951,143 @@ while start_row < total_rows:
     add_header(doc, header_text_next)
     add_table(doc, df11_1, start_row, end_row)
     start_row = end_row
+
+ch_11_par_2 = par_counter.increment()
+
+text = [f'* давление верха/низа аппарата.',
+        f'** уточняется на стадии детального проектирования',
+        f'*** давление верха',
+        f'',
+        f'{ch_11_par_2} Теплообменное оборудование']
+
+for line in text:
+    paragraph_after_break = doc.add_paragraph(line)
+    paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in paragraph_after_break.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25,
+                         line_spacing=22, space_after=0, space_before=0)
+
+df11_2 = read_excel_data('database.xlsx', '11.2.1')
+df11_2 = df11_2.fillna('')
+
+header_text_first = f'Таблица {ch_11_par_2:.1f}.1 – Спецификация теплообменного оборудования по рабочей среде'
+header_text_next = f'Продолжение таблицы {ch_11_par_2:.1f}.1 – Спецификация теплообменного оборудования по рабочей среде'
+
+rows_per_page_first = 9  # Количество строк для первой таблицы
+rows_per_page_next = 12  # Количество строк для следующих таблиц
+
+total_rows = len(df11_2)
+start_row = 0
+
+# Первая таблица
+end_row = min(start_row + rows_per_page_first, total_rows)
+add_header(doc, header_text_first)
+add_table(doc, df11_2, start_row, end_row)
+start_row = end_row
+
+# Последующие таблицы
+while start_row < total_rows:
+    end_row = min(start_row + rows_per_page_next, total_rows)
+    insert_page_break(doc)
+    add_header(doc, header_text_next)
+    add_table(doc, df11_2, start_row, end_row)
+    start_row = end_row
+
+text = [f'* уточняется на стадии детального проектирования.',
+        f''
+      ]
+
+for line in text:
+    paragraph_after_break = doc.add_paragraph(line)
+    paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in paragraph_after_break.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25,
+                         line_spacing=22, space_after=0, space_before=0)
+
+doc.add_page_break()
+
+df11_3 = read_excel_data('database.xlsx', '11.2.2')
+df11_3 = df11_3.fillna('')
+
+
+header_text_first = f'Таблица {ch_11_par_2:.1f}.2 – Спецификация теплообменного оборудования по теплоносителю'
+header_text_next = f'Продолжение таблицы {ch_11_par_2:.1f}.2 – Спецификация теплообменного оборудования по теплоносителю'
+
+rows_per_page_first = 9  # Количество строк для первой таблицы
+rows_per_page_next = 12  # Количество строк для следующих таблиц
+
+total_rows = len(df11_3)
+start_row = 0
+
+# Первая таблица
+end_row = min(start_row + rows_per_page_first, total_rows)
+add_header(doc, header_text_first)
+add_table(doc, df11_3, start_row, end_row)
+start_row = end_row
+
+# Последующие таблицы
+while start_row < total_rows:
+    end_row = min(start_row + rows_per_page_next, total_rows)
+    insert_page_break(doc)
+    add_header(doc, header_text_next)
+    add_table(doc, df11_3, start_row, end_row)
+    start_row = end_row
+
+ch_11_par_3 = par_counter.increment()
+
+text = [f'* Уточняется при детальном проектировании и соответствует полной конденсации водяного пара.',
+        f'',
+        f'{ch_11_par_3:.1f} Динамическое оборудование'
+      ]
+
+for line in text:
+    paragraph_after_break = doc.add_paragraph(line)
+    paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in paragraph_after_break.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25,
+                         line_spacing=22, space_after=0, space_before=0)
+
+df11_3 = read_excel_data('database.xlsx', '11.3')
+df11_3 = df11_3.fillna('')
+
+
+header_text_first = f'Таблица {ch_11_par_3:.1f} – Спецификация динамического оборудования'
+header_text_next = f'Продолжение таблицы {ch_11_par_3:.1f} – Спецификация динамического оборудования'
+
+rows_per_page_first = 9  # Количество строк для первой таблицы
+rows_per_page_next = 12  # Количество строк для следующих таблиц
+
+total_rows = len(df11_3)
+start_row = 0
+
+# Первая таблица
+end_row = min(start_row + rows_per_page_first, total_rows)
+add_header(doc, header_text_first)
+add_table(doc, df11_3, start_row, end_row)
+start_row = end_row
+
+# Последующие таблицы
+while start_row < total_rows:
+    end_row = min(start_row + rows_per_page_next, total_rows)
+    insert_page_break(doc)
+    add_header(doc, header_text_next)
+    add_table(doc, df11_3, start_row, end_row)
+    start_row = end_row
+
+text = [f'* Уточняется на стадии детального проектирования.',
+        f'** Предусмотреть резервную позицию на складе.'
+        ]
+
+for line in text:
+    paragraph_after_break = doc.add_paragraph(line)
+    paragraph_after_break.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    for run in paragraph_after_break.runs:
+        set_font(run, 'Times New Roman', 14)
+    set_paragraph_format(paragraph_after_break, left_indent=0.0, right_indent=0.0, first_line_indent=1.25,
+                         line_spacing=22, space_after=0, space_before=0)
 
 doc.add_page_break()
 
