@@ -18,9 +18,12 @@ section.top_margin = Cm(2)  # Верхнее поле
 section.bottom_margin = Cm(2)  # Нижнее поле
 
 # Функция для изменения шрифта и размера шрифта
-def set_font(run, font_name, font_size):
+def set_font(run, font_name, font_size, italic=False, bold=False):
     run.font.name = font_name
     run.font.size = Pt(font_size)
+    run.font.italic = italic
+    run.font.bold = bold
+    run._element.rPr.rFonts.set(qn('w:eastAsia'), font_name)
 
     # Это нужно для корректного отображения шрифта на всех платформах
     r = run._element
@@ -86,13 +89,6 @@ def add_table(doc, df, start_row, end_row):
                 merge_start = row_idx
             if merge_start < len(table.rows):
                 table.cell(merge_start - 1, col_idx).merge(table.cell(len(table.rows) - 1, col_idx))
-
-def set_font(run, font_name, font_size, italic=False, bold=False):
-    run.font.name = font_name
-    run.font.size = Pt(font_size)
-    run.font.italic = italic
-    run.font.bold = bold
-    run._element.rPr.rFonts.set(qn('w:eastAsia'), font_name)
 
 def insert_page_break(doc):
     doc.add_page_break()
